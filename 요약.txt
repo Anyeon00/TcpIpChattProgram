@@ -1,0 +1,75 @@
+깃허브에 올려놓은 내가 만들엇던거
+
+기능
+1. Client에서 버튼누르면 Server에 "1"보내고,
+Server는 1받고 "fuckyou"를 Client에 보내고,
+Client에서 받아서 textarea에 출력
+
+2. Client에서 textfield에 메세지치고 Enter치면 0과 메시지 보냄,
+Server에 0을 받고, readLine한 메시지를 textarea에출력
+Server에서 Client로 반대로도 마찬가지
+-----------------------------------------------------
+서버
+
+ServerSocket을 7000번에 개설하고 start() 
+
+반복문안에서
+클라이언트 소켓은 서버소켓으로 접속대기하다가 누가 접속하면 생성(ex) Socket client = 서버소켓객체.accept();),
+클라이언트 소켓 client로 BufferedReader와 PrintWriter 생성
+
+
+BufferedReader로 readLine()해서 받은 데이터가 
+0이면(client의 connect버튼), 접속됐다는 메시지를 PrintWriter로 println(), flush() 로 전송 // 연결기능
+client의 ip주소 저장(나중에 채팅기능으로 메시지 전송할때 client의 ServerSocket에 접속하기위해 socket개설하는데 필요)
+// 아무 string 반환기능(단답형)
+1이면(client의 requestData버튼), 아무 string이나 전송
+// 메시지 받는 기능
+2이면(client의 채팅 메시지), 받아서 textarea에 출력
+
+
+// 메시지 전송기능
+그리고 keylistener에 enter가 눌렷을때
+connect받앗을때 저장한 client의 IP를 이용해 소켓을 만들어 client의 서버소켓에 접속,
+ex) Socket client = Socket(clientIP, 4000);
+PrintWriter 생성하고,
+textField에 잇는 string 받아와서 client로 전송
+--------------------------------------
+클라이언트
+
+actionPerformed함수를 panel(또는 프레임)에 구현
+ActionEvent가  // 연결기능
+connect버튼이면, textfield에 입력한 서버의 ip주소를 받아와서 데이터멤버에 저장
+그리고 서버의 ip주소와 접속할 포트넘버로 소켓 생성
+ex) Socket server = socket(serverIP, 4000);
+그리고 PrintWriter생성
+PrintWriter함수로 "0"을 보내서 connect버튼 접속을 알림
+
+requestData버튼이면,  // 아무 string 요청기능
+마찬가지로 Socket server = socket(serverIP,4000); 후
+PrintWriter와 BufferedReader생성
+PrintWriter함수(println, flush)로 "1"을 보내서 requestData버튼임을 알리고
+BufferedReader(readLine)함수로 데이터 읽음
+읽은 데이터를 textaread에 출력
+
+// 메시지 전송기능
+메시지입력 textField에 keyListener추가하고,
+enter가 입력됐을때, 마찬가지로 Socket server = new Socket(serverIP,4000);
+PrintWriter 생성
+2를 보내서 메시지전송임을 알리고
+textField에 있는 string받아와서 client로 전송
+
+
+// 메시지 받는기능
+위 connect버튼이 눌렷을때
+ServerSocket 생성후 start(); (서버로부터의 접속을 accept()해서 처리해야하므로)
+ServerSocket을 구현한 클래스의 run함수안에서
+반복문안에서 Socket server = 서버소켓객체.accept();후
+BufferedReader 생성후
+readLine()으로 받은 메시지를 textarea에 출력
+
+
+
+
+
+
+
