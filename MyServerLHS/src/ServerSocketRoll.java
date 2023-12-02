@@ -59,11 +59,13 @@ public class ServerSocketRoll extends Thread implements KeyListener {
             int keyCode = e.getKeyCode();
             if (keyCode == KeyEvent.VK_ENTER) {
                 Socket sendToClient = new Socket(clientIP, 7000);
-                PrintWriter to_client = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
+                PrintWriter to_client = new PrintWriter(new OutputStreamWriter(sendToClient.getOutputStream()));
 
                 String msg = mainFrame.inputContext.getText();
                 to_client.println(msg);
                 to_client.flush();
+
+                mainFrame.writeMessage("[Me] : " + msg);
 
                 mainFrame.inputContext.setText(null);
             }
