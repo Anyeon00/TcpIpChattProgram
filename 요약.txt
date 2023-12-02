@@ -5,8 +5,8 @@
 Server는 1받고 "fuckyou"를 Client에 보내고,
 Client에서 받아서 textarea에 출력
 
-2. Client에서 textfield에 메세지치고 Enter치면 0과 메시지 보냄,
-Server에 0을 받고, readLine한 메시지를 textarea에출력
+2. Client에서 textfield에 메세지치고 Enter치면 2과 메시지 보냄,
+Server에 2을 받고, readLine한 메시지를 textarea에출력
 Server에서 Client로 반대로도 마찬가지
 -----------------------------------------------------
 서버
